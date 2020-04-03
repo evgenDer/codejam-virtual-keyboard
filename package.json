@@ -1,0 +1,32 @@
+{
+  "name": "codejam-virtual-keyboard",
+  "version": "1.0.0",
+  "description": "",
+  "main": "script.js",
+  "scripts": {
+    "lint": "eslint script.js",
+    "lint:fix":"eslint script.js --fix"
+
+  
+
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/evgenDer/codejam-virtual-keyboard.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/evgenDer/codejam-virtual-keyboard/issues"
+  },
+  "homepage": "https://github.com/evgenDer/codejam-virtual-keyboard#readme",
+  "devDependencies": {
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb": "^18.1.0",
+    "eslint-config-prettier": "^6.10.1",
+    "eslint-plugin-html": "^6.0.0",
+    "eslint-plugin-import": "^2.20.2",
+    "prettier": "^2.0.2"
+  }
+}
