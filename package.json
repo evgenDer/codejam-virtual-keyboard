@@ -4,8 +4,8 @@
   "description": "",
   "main": "script.js",
   "scripts": {
-    "lint": "eslint script.js",
-    "lint:fix":"eslint script.js --fix"
+    "lint": "eslint ./src",
+    "lint:fix":"eslint ./src script.js --fix"
 
   
 

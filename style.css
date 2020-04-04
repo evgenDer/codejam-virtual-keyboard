@@ -17,7 +17,10 @@ body {
 }
 
 .keyboard {
-  flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
   width: 100%;
   color: white;
@@ -27,9 +30,15 @@ body {
 }
 
 .keyboard__key {
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
   display: inline-flex;
-  align-items: center;
-  justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
   vertical-align: top;
   margin: 5px;
   height: 40px;
@@ -42,3 +51,34 @@ body {
   width: 55px;
 }
 
+@-webkit-keyframes circle {
+  50% {
+    background-color: #8970bb;
+  }
+  100% {
+    border-radius: 40%;
+    background-color: #6d50a8;
+  }
+}
+
+@keyframes circle {
+  50% {
+    background-color: #8970bb;
+  }
+  100% {
+    border-radius: 40%;
+    background-color: #6d50a8;
+  }
+}
+
+.key_active {
+  -webkit-animation: circle 1s  ease-out;
+  animation: circle 1s  ease-out;
+  background-color: #6d50a8;
+  border-radius: 25%;
+}
+
+.keyboard__key:hover {
+  cursor: pointer;
+}
+/*# sourceMappingURL=style.css.map */
