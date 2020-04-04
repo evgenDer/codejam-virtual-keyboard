@@ -33,14 +33,14 @@ class Keyboard {
           key.classList.add('keyboard__key_long');
           key.insertAdjacentHTML('beforeend', Object.entries(KEYBOARD[i][j])[1][1]);
         }
-        if (this.lang === 'en') {
-          if (Object.prototype.hasOwnProperty.call(KEYBOARD[i][j], 'en')) {
+        if (Object.prototype.hasOwnProperty.call(KEYBOARD[i][j], 'en')) {
+          if (this.lang === 'en') {
             key.insertAdjacentHTML('afterbegin', KEYBOARD[i][j].en[0]);
             this.keys.push(KEYBOARD[i][j]);
+          } else {
+            key.insertAdjacentHTML('afterbegin', KEYBOARD[i][j].ru[0]);
+            this.keys.push(this.keys.push(KEYBOARD[i][j].ru[0]));
           }
-        } else {
-          key.insertAdjacentHTML('afterbegin', KEYBOARD[i][j].ru[0]);
-          this.keys.push(this.keys.push(KEYBOARD[i][j].ru[0]));
         }
         key.setAttribute('datacode', KEYBOARD[i][j].code);
         this.keyboard.append(key);
