@@ -20,6 +20,19 @@ class Keyboard {
     this.textArea.focus();
   }
 
+  createHtml() {
+    this.textArea.id = 'textarea';
+    this.wrapper.classList.add('wrapper');
+    this.textArea.classList.add('textarea');
+    this.keyboard.classList.add('keyboard');
+    const info = document.createElement('p');
+    info.textContent = 'Для смены языка нажмите: \'Ctrl\' + \'Alt\'';
+    this.textArea.focus();
+    document.body.append(this.wrapper);
+    this.wrapper.append(this.textArea, this.keyboard, info);
+    this.createKeys();
+  }
+
   createKeys() {
     for (let i = 0; i < KEYBOARD.length; i += 1) {
       for (let j = 0; j < KEYBOARD[i].length; j += 1) {
