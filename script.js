@@ -72,9 +72,11 @@ class Keyboard {
     const position = this.textArea.selectionStart;
     switch (codeOfElement) {
       case 'Backspace':
+        this.deleteLetter(position);
         this.setCaret(position - 1);
         break;
       case 'Delete':
+        this.deleteLetter(position + 1);
         this.setCaret(position);
         break;
       case 'CapsLock':
@@ -108,6 +110,7 @@ class Keyboard {
       case 'ShiftLeft':
       case 'ShiftRight':
         this.isShift = true;
+        this.transformShiftKeys();
         break;
       case 'ControlLeft':
       case 'ControlRight':
@@ -149,12 +152,16 @@ class Keyboard {
   }
 
   keyHandlerUp(codeOfElement) {
+    if (this.isAlt && this.isCtrl) {
+      this.changeLanguage();
+    }
     this.isAlt = false;
     this.isCtrl = false;
     switch (codeOfElement) {
       case 'ShiftLeft':
       case 'ShiftRight':
         this.isShift = false;
+        this.transformShiftKeys();
         break;
       case 'ControlLeft':
       case 'AltLeft':
@@ -168,8 +175,83 @@ class Keyboard {
       currentKey.classList.remove('key_active');
     }
   }
-}
 
+  deleteLetter(position) {
+    let textValue = this.textArea.value;
+    textValue = textValue.slice(0, position - 1) + textValue.slice(position);
+    this.textArea.value = textValue;
+  }
+
+  transformShiftKeys() {
+    const keyboard = this.keyboard.children;
+    for (let i = 0, counterKey = 0; i < keyboard.length && counterKey < this.keys.length; i += 1) {
+      if (keyboard[i].textContent.length === 1) {
+        let textOfElement;
+        if (this.isShift) {
+          if (this.lang === 'ru') {
+            textOfElement = this.keys[counterKey].ru;
+          } else {
+            textOfElement = this.keys[counterKey].en;
+          }
+        } else {
+          if (this.lang === 'ru') {
+            textOfElement = this.keys[counterKey].ru;
+          } else {
+            textOfElement = this.keys[counterKey].en;
+          }
+          textOfElement = this.isCapsLock ? textOfElement[0].toUpperCase()
+            : textOfElement[0].toLowerCase();
+        }
+        keyboard[i].textContent = this.isShift ? textOfElement[1] : textOfElement[0];
+        counterKey += 1;
+      }
+    }
+  }
+
+
+  changeLanguage() {
+    if (this.lang === 'en') {
+      this.lang = 'ru';
+      localStorage.setItem('lang', 'ru');
+    } else {
+      this.lang = 'en';
+      localStorage.setItem('lang', 'en');
+    }
+    const keyboard = this.keyboard.children;
+    for (let i = 0, counterKey = 0; i < keyboard.length && counterKey < this.keys.length; i += 1) {
+      let textOfElement;
+      if (keyboard[i].textContent.length === 1) {
+        if (this.lang === 'en') {
+          textOfElement = this.keys[counterKey].en;
+        } else {
+          textOfElement = this.keys[counterKey].ru;
+        }
+        textOfElement = this.isCapsLock ? textOfElement[0].toUpperCase()
+          : textOfElement[0].toLowerCase();
+        keyboard[i].textContent = textOfElement;
+        counterKey += 1;
+      } else {
+        i += 1;
+      }
+    }
+  }
+
+  keysCapsLock() {
+    this.isCapsLock = !this.isCapsLock;
+    const keyboard = this.keyboard.children;
+    for (let i = 0; i < keyboard.length; i += 1) {
+      if (keyboard[i].textContent.length === 1) {
+        keyboard[i].textContent = this.isCapsLock ? keyboard[i].textContent.toUpperCase()
+          : keyboard[i].textContent.toLowerCase();
+      }
+    }
+  }
+
+  printText() {
+    this.textArea.setRangeText(this.textAreaValue, this.textArea.selectionStart, this.textArea.selectionEnd, 'end');
+    this.textAreaValue = '';
+  }
+}
 
 window.onload = () => {
   const keyboard = new Keyboard();
