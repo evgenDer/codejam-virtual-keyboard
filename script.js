@@ -62,6 +62,30 @@ class Keyboard {
     }
   }
 
+  addEventsOnKeyboard() {
+    document.addEventListener('keydown', (event) => {
+      event.preventDefault();
+      this.codeOfElement = event.code;
+      this.keyHandlerDown(this.codeOfElement);
+    });
+    document.addEventListener('keyup', (event) => {
+      this.codeOfElement = event.code;
+      this.keyHandlerUp(this.codeOfElement);
+    });
+    document.addEventListener('mousedown', (event) => {
+      this.codeOfElement = event.toElement.getAttribute('datacode');
+      if (this.codeOfElement != null) {
+        this.keyHandlerDown(this.codeOfElement);
+      }
+    });
+    document.addEventListener('mouseup', (event) => {
+      this.codeOfElement = event.toElement.getAttribute('datacode');
+      if (this.codeOfElement != null) {
+        this.keyHandlerUp(this.codeOfElement);
+      }
+    });
+  }
+
   setCaret(position) {
     this.textArea.selectionStart = position;
     this.textArea.selectionEnd = position;
@@ -255,5 +279,6 @@ class Keyboard {
 
 window.onload = () => {
   const keyboard = new Keyboard();
+  keyboard.addEventsOnKeyboard();
   keyboard.createHtml();
 };
