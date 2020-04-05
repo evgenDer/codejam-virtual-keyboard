@@ -61,6 +61,113 @@ class Keyboard {
       this.keyboard.append('\n');
     }
   }
+
+  setCaret(position) {
+    this.textArea.selectionStart = position;
+    this.textArea.selectionEnd = position;
+  }
+
+  keyHandlerDown(codeOfElement) {
+    this.textArea.focus();
+    const position = this.textArea.selectionStart;
+    switch (codeOfElement) {
+      case 'Backspace':
+        this.setCaret(position - 1);
+        break;
+      case 'Delete':
+        this.setCaret(position);
+        break;
+      case 'CapsLock':
+        document.querySelector(`div.keyboard__key[datacode="${codeOfElement}"]`).classList.toggle('key_active');
+        this.keysCapsLock();
+        break;
+      case 'ArrowUp':
+        this.textArea.selectionStart = 0;
+        this.textArea.selectionEnd = this.textArea.selectionStart;
+        this.textArea.focus();
+        break;
+      case 'ArrowDown':
+        this.textArea.selectionStart = this.textArea.value.length;
+        this.textArea.selectionEnd = this.textArea.selectionStart;
+        this.textArea.focus();
+        break;
+      case 'ArrowRight':
+        this.textArea.selectionStart += 1;
+        this.textArea.selectionEnd = this.textArea.selectionStart;
+        break;
+      case 'ArrowLeft':
+        this.textArea.selectionStart -= 1;
+        this.textArea.selectionEnd = this.textArea.selectionStart;
+        this.setCaret(this.textArea.selectionStart);
+        break;
+
+      case 'Enter':
+        this.textArea.setRangeText('\n', this.textArea.selectionStart, this.textArea.selectionEnd, 'end');
+        break;
+
+      case 'ShiftLeft':
+      case 'ShiftRight':
+        this.isShift = true;
+        break;
+      case 'ControlLeft':
+      case 'ControlRight':
+        this.textAreaValue += '';
+        this.printText();
+        this.isCtrl = true;
+        break;
+
+      case 'AltLeft':
+      case 'AltRight':
+        this.isAlt = true;
+        this.textAreaValue += '';
+        this.printText();
+        break;
+
+      case 'Tab':
+        this.textAreaValue += '   ';
+        this.printText();
+        break;
+
+      case 'Space':
+        this.textAreaValue += ' ';
+        this.printText();
+        break;
+
+      case 'MetaLeft':
+        this.textAreaValue += '';
+        break;
+
+      default:
+        this.textAreaValue += document.querySelector(`div.keyboard__key[datacode="${codeOfElement}"]`).textContent;
+        this.printText();
+        break;
+    }
+    if (codeOfElement !== 'CapsLock') {
+      const currentKey = document.querySelector(`div.keyboard__key[datacode="${codeOfElement}"]`);
+      currentKey.classList.add('key_active');
+    }
+  }
+
+  keyHandlerUp(codeOfElement) {
+    this.isAlt = false;
+    this.isCtrl = false;
+    switch (codeOfElement) {
+      case 'ShiftLeft':
+      case 'ShiftRight':
+        this.isShift = false;
+        break;
+      case 'ControlLeft':
+      case 'AltLeft':
+      case 'MetaLeft':
+        break;
+      default:
+        break;
+    }
+    if (codeOfElement !== 'CapsLock') {
+      const currentKey = document.querySelector(`div.keyboard__key[datacode="${codeOfElement}"]`);
+      currentKey.classList.remove('key_active');
+    }
+  }
 }
 
 
