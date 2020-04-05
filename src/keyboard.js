@@ -68,4 +68,4 @@ const KEYBOARD = [
     { code: 'ArrowDown', down: '▼' },
     { code: 'ArrowRight', right: '►' }],
 ];
-export default { KEYBOARD };
+export default KEYBOARD;
