@@ -1,0 +1,84 @@
+@import url(https://fonts.googleapis.com/css?family=Lato&display=swap);
+body {
+  text-align: center;
+  font-family: "Lato", sens-serif;
+}
+
+.wrapper {
+  margin: 0 auto;
+  width: 800px;
+  text-align: center;
+}
+
+.textarea {
+  padding: 0px;
+  height: 250px;
+  width: 100%;
+}
+
+.keyboard {
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+  color: white;
+  height: 250px;
+  background-color: #eba1c1;
+  background: radial-gradient(circle, #eba1c1 15%, #94bbe9 80%);
+}
+
+.keyboard__key {
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  vertical-align: top;
+  margin: 5px;
+  height: 40px;
+  width: 40px;
+  background-color: #cc6492;
+  border-radius: 5%;
+}
+
+.keyboard__key_long {
+  width: 55px;
+}
+
+@-webkit-keyframes circle {
+  50% {
+    background-color: #8970bb;
+  }
+  100% {
+    border-radius: 40%;
+    background-color: #6d50a8;
+  }
+}
+
+@keyframes circle {
+  50% {
+    background-color: #8970bb;
+  }
+  100% {
+    border-radius: 40%;
+    background-color: #6d50a8;
+  }
+}
+
+.key_active {
+  -webkit-animation: circle 1s  ease-out;
+  animation: circle 1s  ease-out;
+  background-color: #6d50a8;
+  border-radius: 25%;
+}
+
+.keyboard__key:hover {
+  cursor: pointer;
+}
+/*# sourceMappingURL=style.css.map */
