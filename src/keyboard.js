@@ -59,7 +59,7 @@ const KEYBOARD = [
     { code: 'ShiftRight', Shift: 'Shift', width: '65px' }],
 
   [{ code: 'ControlLeft', Ctrl: 'Ctrl' },
-    { code: 'Meta', Win: 'Win' },
+    { code: 'MetaLeft', Win: 'Win' },
     { code: 'AltLeft', Alt: 'Alt' },
     { code: 'Space', Space: ' ', width: '269px' },
     { code: 'AltRight', Alt: 'Alt' },
