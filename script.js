@@ -95,6 +95,9 @@ class Keyboard {
   keyHandlerDown(codeOfElement) {
     this.textArea.focus();
     const position = this.textArea.selectionStart;
+    if(document.querySelector(`div.keyboard__key[datacode="${codeOfElement}"]`)===null){
+      return;
+    }
     switch (codeOfElement) {
       case 'Backspace':
         this.deleteLetter(position);
@@ -179,6 +182,9 @@ class Keyboard {
   }
 
   keyHandlerUp(codeOfElement) {
+    if(document.querySelector(`div.keyboard__key[datacode="${codeOfElement}"]`)===null){
+      return;
+    }
     switch (codeOfElement) {
       case 'ShiftLeft':
       case 'ShiftRight':
