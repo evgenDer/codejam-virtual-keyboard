@@ -149,7 +149,6 @@ class Keyboard {
         this.textAreaValue += '';
         this.printText();
         break;
-
       case 'Tab':
         this.textAreaValue += '   ';
         this.printText();
@@ -161,6 +160,7 @@ class Keyboard {
         break;
 
       case 'MetaLeft':
+      case 'Meta':
         this.textAreaValue += '';
         break;
 
