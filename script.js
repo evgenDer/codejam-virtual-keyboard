@@ -1,4 +1,3 @@
-
 // eslint-disable-next-line import/extensions
 import KEYBOARD from './src/keyboard.js';
 
@@ -25,11 +24,13 @@ class Keyboard {
     this.wrapper.classList.add('wrapper');
     this.textArea.classList.add('textarea');
     this.keyboard.classList.add('keyboard');
-    const info = document.createElement('p');
-    info.textContent = 'Для смены языка нажмите: \'Ctrl\' + \'Alt\'';
+    const infoLanguage = document.createElement('p');
+    infoLanguage.textContent = 'Для смены языка нажмите: \'Ctrl\' + \'Alt\'';
+    const infoOS = document.createElement('p');
+    infoOS.textContent = 'Клавиатура создана в операционной системе Windows';
     this.textArea.focus();
     document.body.append(this.wrapper);
-    this.wrapper.append(this.textArea, this.keyboard, info);
+    this.wrapper.append(this.textArea, this.keyboard, infoLanguage, infoOS);
     this.createKeys();
   }
 
@@ -52,7 +53,7 @@ class Keyboard {
             this.keys.push(KEYBOARD[i][j]);
           } else {
             key.insertAdjacentHTML('afterbegin', KEYBOARD[i][j].ru[0]);
-            this.keys.push(this.keys.push(KEYBOARD[i][j].ru[0]));
+            this.keys.push(KEYBOARD[i][j]);
           }
         }
         key.setAttribute('datacode', KEYBOARD[i][j].code);
@@ -133,7 +134,6 @@ class Keyboard {
 
       case 'ShiftLeft':
       case 'ShiftRight':
-        this.isShift = true;
         this.transformShiftKeys();
         break;
       case 'ControlLeft':
@@ -169,6 +169,9 @@ class Keyboard {
         this.printText();
         break;
     }
+    if (this.isAlt && this.isCtrl) {
+      this.changeLanguage();
+    }
     if (codeOfElement !== 'CapsLock') {
       const currentKey = document.querySelector(`div.keyboard__key[datacode="${codeOfElement}"]`);
       currentKey.classList.add('key_active');
@@ -176,20 +179,18 @@ class Keyboard {
   }
 
   keyHandlerUp(codeOfElement) {
-    if (this.isAlt && this.isCtrl) {
-      this.changeLanguage();
-    }
-    this.isAlt = false;
-    this.isCtrl = false;
     switch (codeOfElement) {
       case 'ShiftLeft':
       case 'ShiftRight':
-        this.isShift = false;
         this.transformShiftKeys();
         break;
       case 'ControlLeft':
+      case 'ControlRight':
+        this.isCtrl = false;
+        break;
       case 'AltLeft':
-      case 'MetaLeft':
+      case 'AltRight':
+        this.isAlt = false;
         break;
       default:
         break;
@@ -207,43 +208,37 @@ class Keyboard {
   }
 
   transformShiftKeys() {
+    this.isShift = !this.isShift;
     const keyboard = this.keyboard.children;
+    let textOfElement = [];
     for (let i = 0, counterKey = 0; i < keyboard.length && counterKey < this.keys.length; i += 1) {
       if (keyboard[i].textContent.length === 1) {
-        let textOfElement;
-        if (this.isShift) {
-          if (this.lang === 'ru') {
-            textOfElement = this.keys[counterKey].ru;
-          } else {
-            textOfElement = this.keys[counterKey].en;
-          }
+        if (this.lang === 'ru') {
+          textOfElement = this.keys[counterKey].ru;
         } else {
-          if (this.lang === 'ru') {
-            textOfElement = this.keys[counterKey].ru;
-          } else {
-            textOfElement = this.keys[counterKey].en;
-          }
-          textOfElement = this.isCapsLock ? textOfElement[0].toUpperCase()
-            : textOfElement[0].toLowerCase();
+          textOfElement = this.keys[counterKey].en;
         }
         keyboard[i].textContent = this.isShift ? textOfElement[1] : textOfElement[0];
+        if (this.isCapsLock) {
+          keyboard[i].textContent = !this.isShift ? textOfElement[0].toUpperCase()
+            : textOfElement[1].toLowerCase();
+        }
         counterKey += 1;
       }
     }
   }
 
-
   changeLanguage() {
     if (this.lang === 'en') {
       this.lang = 'ru';
-      localStorage.setItem('lang', 'ru');
+      localStorage.setItem('language', 'ru');
     } else {
       this.lang = 'en';
-      localStorage.setItem('lang', 'en');
+      localStorage.setItem('language', 'en');
     }
+    let textOfElement;
     const keyboard = this.keyboard.children;
     for (let i = 0, counterKey = 0; i < keyboard.length && counterKey < this.keys.length; i += 1) {
-      let textOfElement;
       if (keyboard[i].textContent.length === 1) {
         if (this.lang === 'en') {
           textOfElement = this.keys[counterKey].en;
